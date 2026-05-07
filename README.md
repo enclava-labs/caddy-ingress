@@ -8,6 +8,8 @@ This image is the Caddy sidecar used by CAP-generated tenant pods. It includes:
 - `cryptsetup` and `e2fsprogs`, retained for compatibility with older
   secure-PV bootstrap paths.
 - `curl` and `wget`, used by health/resource fetch paths.
+- `/usr/local/bin/enclava-wait-exec`, the wait helper CAP uses before
+  starting Caddy against encrypted tenant state.
 
 Published image:
 

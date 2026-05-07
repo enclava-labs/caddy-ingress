@@ -11,6 +11,7 @@ if docker run --rm "$IMAGE" caddy list-modules | grep -F "dns.providers.cloudfla
 fi
 docker run --rm "$IMAGE" sh -eu -c '
   command -v caddy
+  command -v enclava-wait-exec
   command -v cryptsetup
   command -v mkfs.ext4
   command -v curl
