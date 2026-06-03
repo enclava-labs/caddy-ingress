@@ -5,6 +5,12 @@ on:
     branches: ["main"]
     tags: ["v*"]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: "Optional additional image tag to publish, for example v0.1.0"
+        required: false
+        type: string
 
 jobs:
   build:
@@ -32,11 +38,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/enclava-ai/caddy-ingress
+          images: ghcr.io/enclava-labs/caddy-ingress
           tags: |
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=
+            type=raw,value=${{ github.event.inputs.version_tag }},enable=${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version_tag != '' }}
 
       - name: Build and maybe push
         id: build
@@ -58,6 +65,6 @@ jobs:
       - name: Sign pushed digest
         if: github.event_name != 'pull_request'
         env:
-          IMAGE: ghcr.io/enclava-ai/caddy-ingress
+          IMAGE: ghcr.io/enclava-labs/caddy-ingress
           DIGEST: ${{ steps.build.outputs.digest }}
         run: cosign sign --yes "${IMAGE}@${DIGEST}"

@@ -14,7 +14,7 @@ This image is the Caddy sidecar used by CAP-generated tenant pods. It includes:
 Published image:
 
 ```text
-ghcr.io/enclava-ai/caddy-ingress
+ghcr.io/enclava-labs/caddy-ingress
 ```
 
 The Kubernetes command is supplied by CAP. In production the container runs
