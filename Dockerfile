@@ -1,10 +1,13 @@
-ARG CADDY_VERSION=2.10.2
+ARG CADDY_VERSION=2.11.7
+# Digest of caddy:${CADDY_VERSION}-builder (bundles Go 1.27.3, 2026-10-20 build);
+# rotate together with CADDY_VERSION, see README "Base image provenance".
+ARG CADDY_BUILDER_DIGEST=sha256:8910fe662f448b860e8d16ef1c9a4f8946d3193bdc3e971bf0c55c9a2cf246f6
 
-FROM caddy:${CADDY_VERSION}-builder AS builder
+FROM caddy:${CADDY_VERSION}-builder@${CADDY_BUILDER_DIGEST} AS builder
 
 RUN xcaddy build
 
-FROM alpine:3.22
+FROM alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8
 
 RUN apk add --no-cache \
     ca-certificates \
